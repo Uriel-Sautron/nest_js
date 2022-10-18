@@ -1,12 +1,26 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { MoviesController } from './movies/movies.controller';
 import { MoviesModule } from './movies/movies.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { TodosModule } from './todos/todos.module';
 
 @Module({
-  imports: [MoviesModule],
-  controllers: [AppController, MoviesController],
+  imports: [
+    TypeOrmModule.forRoot({
+      type: 'mysql',
+      host: 'localhost',
+      port: 3306,
+      username: 'uriel',
+      password: 'S@@moins@974',
+      database: 'todolist',
+      autoLoadEntities: true,
+      synchronize: true,
+    }),
+    MoviesModule,
+    TodosModule,
+  ],
+  controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule {}
